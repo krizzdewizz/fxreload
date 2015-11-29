@@ -1,0 +1,25 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+* {
+	-fx-font-size: 10pt;
+}
+
+/*
+.split-menu-button,
+.split-menu-button > .label,
+.split-menu-button > .arrow-button {
+	-fx-background-color: none;
+	-fx-border-color: white;
+	-fx-border-radius: 4px;
+}
+
+.split-menu-button > .label:hover,
+.split-menu-button > .arrow-button:hover {
+	-fx-border-color: gray;
+}
+ */
+
+#msg {
+	-fx-text-fill: darkblue;
+	-fx-padding: 5px;
+}
+
