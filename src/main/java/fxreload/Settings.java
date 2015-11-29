@@ -45,11 +45,9 @@ public enum Settings {
 
 	void load() {
 		try {
-			Path file = getFile();
-
 			JAXBContext jaxbContext = JAXBContext.newInstance(FxReload.class);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-			fxReload = (FxReload) unmarshaller.unmarshal(file.toFile());
+			fxReload = (FxReload) unmarshaller.unmarshal(getFile().toFile());
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -105,11 +103,6 @@ public enum Settings {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	public void clear() {
-		fxReload.getFile().clear();
-		needsSave = true;
 	}
 
 	public void addWebWatch(WebWatch webWatch) {

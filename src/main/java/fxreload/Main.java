@@ -29,11 +29,11 @@ public class Main extends Application {
 	public void start(Stage stage) {
 		try {
 			stage.setTitle("fxreload");
-			stage.getIcons().add(new Image(getClass().getResourceAsStream("dn3d.png")));
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Main.fxml"));
+			stage.getIcons().add(new Image(getClass().getResourceAsStream("main.png")));
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("main.fxml"));
 			BorderPane root = fxmlLoader.load();
 			Scene scene = new Scene(root, 1024, 768);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource("main.css").toExternalForm());
 			MainController controller = fxmlLoader.getController();
 			stage.setOnCloseRequest(e -> {
 				controller.closeAll();
@@ -50,11 +50,11 @@ public class Main extends Application {
 		}
 	}
 
-	static final KeyCombination KEY_OPEN = KeyCombination.keyCombination("SHORTCUT+O");
-	static final KeyCombination KEY_CLOSE = KeyCombination.keyCombination("SHORTCUT+W");
-	static final KeyCombination KEY_HISTORY = KeyCombination.keyCombination("SHORTCUT+H");
-	static final List<KeyCode> ALL_DIGITS = Arrays.asList(KeyCode.DIGIT1, KeyCode.DIGIT2, KeyCode.DIGIT3, KeyCode.DIGIT4, KeyCode.DIGIT5, KeyCode.DIGIT6, KeyCode.DIGIT7, KeyCode.DIGIT8,
-			KeyCode.DIGIT9, KeyCode.DIGIT0);
+	private static final KeyCombination KEY_OPEN = KeyCombination.keyCombination("SHORTCUT+O");
+	private static final KeyCombination KEY_CLOSE = KeyCombination.keyCombination("SHORTCUT+W");
+	private static final KeyCombination KEY_HISTORY = KeyCombination.keyCombination("SHORTCUT+H");
+	private static final List<KeyCode> ALL_DIGITS = Arrays.asList(KeyCode.DIGIT1, KeyCode.DIGIT2, KeyCode.DIGIT3, KeyCode.DIGIT4, KeyCode.DIGIT5, KeyCode.DIGIT6, KeyCode.DIGIT7,
+			KeyCode.DIGIT8, KeyCode.DIGIT9, KeyCode.DIGIT0);
 
 	private void installKeys(Scene scene, MainController controller) {
 		scene.setOnKeyPressed(e -> {
@@ -99,6 +99,7 @@ public class Main extends Application {
 				for (File file : db.getFiles()) {
 					controller.addFileTab(file.toPath());
 				}
+				controller.buildMenu();
 			}
 			e.setDropCompleted(success);
 			e.consume();

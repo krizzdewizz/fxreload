@@ -1,5 +1,5 @@
 ## Settings
-The settings file is located here:
+The settings file [settings.txt](javascript:fxreloadHelp.openSettings()) is located here:
 * Windows: `%USERPROFILE%\.fxreload\settings.txt`
 * Mac/Linux: `$HOME/.fxreload/settings.txt`
 

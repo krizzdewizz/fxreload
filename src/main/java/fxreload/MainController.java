@@ -41,9 +41,6 @@ public class MainController implements Initializable {
 
 	private File lastChosenFolder;
 
-	public MainController() {
-	}
-
 	void reloadFile(Path file, String processedContent) {
 		FileTab tab = findFileTab(file);
 		if (processedContent == null) {
@@ -90,7 +87,7 @@ public class MainController implements Initializable {
 			for (int i = files.size() - 1; i >= 0; i--) {
 				Settings.INSTANCE.pickFileWatch(files.get(i).toPath());
 			}
-			buildOpenMenu();
+			buildMenu();
 		}
 	}
 
@@ -192,14 +189,14 @@ public class MainController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		buildOpenMenu();
+		buildMenu();
 		Settings.INSTANCE.setWatch(new Watch(Settings.INSTANCE.getFile(), Processor.NO_PROCESSOR, (a, b) -> {
 			Settings.INSTANCE.load();
-			buildOpenMenu();
+			buildMenu();
 		}));
 	}
 
-	private void buildOpenMenu() {
+	void buildMenu() {
 		ObservableList<MenuItem> items = favMenu.getItems();
 		items.clear();
 
@@ -254,7 +251,7 @@ public class MainController implements Initializable {
 			ww.setUrl("http://localhost:8000/index.html");
 			ww.setFile(Arrays.asList("d:\\data\\myproj\\index.html", "d:\\data\\myproj\\main.css"));
 			Settings.INSTANCE.addWebWatch(ww);
-			buildOpenMenu();
+			buildMenu();
 			Desktop.getDesktop().open(Settings.INSTANCE.getFile().toFile());
 		} catch (Exception e1) {
 		}
@@ -262,7 +259,7 @@ public class MainController implements Initializable {
 
 	private void openFile(Path file) {
 		addFileTab(file);
-		buildOpenMenu();
+		buildMenu();
 	}
 
 	public void onHelp() {

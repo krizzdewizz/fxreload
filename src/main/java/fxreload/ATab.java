@@ -6,8 +6,8 @@ import javafx.scene.web.WebView;
 
 public class ATab extends Tab {
 	public final WebView webView;
-	int scrollY;
-	private Watch watch;
+	private final Watch watch;
+	private int scrollY;
 
 	public ATab(Watch watch) {
 		this.watch = watch;
@@ -24,7 +24,7 @@ public class ATab extends Tab {
 		watch.notifyChanged();
 	}
 
-	private void onLoad() {
+	void onLoad() {
 		webView.getEngine().executeScript(String.format("window.scrollTo(0, %s);", scrollY));
 	}
 
