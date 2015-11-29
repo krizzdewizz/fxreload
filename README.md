@@ -1,3 +1,9 @@
+# fxreload
+JavaFX app that watches local files for changes, and displays their (processed) content in a web view.
+
+* Watch a Markdown or Asciidoc file and display it's processed HTML output.
+* Watch multiple files and reload a web page.
+
 ## Build
 
 * cd into the project dir.
