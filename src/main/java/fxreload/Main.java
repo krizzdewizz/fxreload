@@ -30,7 +30,7 @@ public class Main extends Application {
 		try {
 			stage.setTitle("fxreload");
 			stage.getIcons().add(new Image(getClass().getResourceAsStream("main.png")));
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("main.fxml"));
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Main.fxml"));
 			BorderPane root = fxmlLoader.load();
 			Scene scene = new Scene(root, 1024, 768);
 			scene.getStylesheets().add(getClass().getResource("main.css").toExternalForm());
