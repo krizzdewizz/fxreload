@@ -59,12 +59,11 @@ public class MainController implements Initializable {
 	}
 
 	public void onClose() {
-		FileTab tab = (FileTab) tabPane.getSelectionModel().getSelectedItem();
-		if (tab == null) {
-			return;
+		ATab tab = (ATab) tabPane.getSelectionModel().getSelectedItem();
+		if (tab != null) {
+			tab.getOnClosed().handle(null);
+			tabPane.getTabs().remove(tab);
 		}
-		tab.getOnClosed().handle(null);
-		tabPane.getTabs().remove(tab);
 	}
 
 	public void onReloadNow() {
@@ -196,6 +195,12 @@ public class MainController implements Initializable {
 		}));
 	}
 
+	private void addSeparator(List<MenuItem> items) {
+		if (items.isEmpty() || !(items.get(items.size() - 1) instanceof SeparatorMenuItem)) {
+			items.add(new SeparatorMenuItem());
+		}
+	}
+
 	void buildMenu() {
 		ObservableList<MenuItem> items = favMenu.getItems();
 		items.clear();
@@ -207,7 +212,7 @@ public class MainController implements Initializable {
 		settings.setOnAction(e -> onAddWebPage());
 		items.add(settings);
 
-		items.add(new SeparatorMenuItem());
+		addSeparator(items);
 
 		int i = 1;
 		for (Path it : Settings.INSTANCE.getFileWatches()) {
@@ -217,23 +222,15 @@ public class MainController implements Initializable {
 			i++;
 		}
 
-		boolean needsSep = !items.isEmpty();
-		boolean hadWatches = false;
+		addSeparator(items);
+
 		for (WebPage it : Settings.INSTANCE.getWebPages()) {
-			hadWatches = true;
-			if (needsSep) {
-				items.add(new SeparatorMenuItem());
-			} else {
-				needsSep = false;
-			}
 			MenuItem item = new MenuItem(String.format("%s", it.getUrl()));
 			item.setOnAction(e -> addWebTab(it));
 			items.add(item);
 		}
 
-		if (hadWatches) {
-			items.add(new SeparatorMenuItem());
-		}
+		addSeparator(items);
 
 		MenuItem help = new MenuItem("Help");
 		help.setOnAction(e -> onHelp());
