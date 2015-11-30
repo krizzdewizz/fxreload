@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class FxReload {
 	private List<String> file;
-	private List<WebWatch> webPage;
+	private List<WebPage> webPage;
 
 	public List<String> getFile() {
 		if (file == null) {
@@ -21,11 +21,11 @@ public class FxReload {
 		this.file = file;
 	}
 
-	public void setWebPage(List<WebWatch> webPage) {
+	public void setWebPage(List<WebPage> webPage) {
 		this.webPage = webPage;
 	}
 
-	public List<WebWatch> getWebPage() {
+	public List<WebPage> getWebPage() {
 		if (webPage == null) {
 			webPage = new ArrayList<>();
 		}

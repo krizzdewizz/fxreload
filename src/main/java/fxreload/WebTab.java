@@ -1,14 +1,14 @@
 package fxreload;
 
-import fxreload.model.WebWatch;
+import fxreload.model.WebPage;
 
 public class WebTab extends ATab {
 
-	public final WebWatch webWatch;
+	public final WebPage webPage;
 
-	public WebTab(Watch watch, WebWatch webWatch) {
+	public WebTab(Watch watch, WebPage webPage) {
 		super(watch);
-		this.webWatch = webWatch;
-		setText(webWatch.getUrl());
+		this.webPage = webPage;
+		setText(webPage.getUrl());
 	}
 }

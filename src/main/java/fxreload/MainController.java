@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import fxreload.Watch.ChangedHandler;
-import fxreload.model.WebWatch;
+import fxreload.model.WebPage;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -54,8 +54,8 @@ public class MainController implements Initializable {
 		}
 	}
 
-	void reloadWebPage(WebWatch webWatch) {
-		findWebTab(webWatch).loadUrl(webWatch.getUrl());
+	void reloadWebPage(WebPage webPage) {
+		findWebTab(webPage).loadUrl(webPage.getUrl());
 	}
 
 	public void onClose() {
@@ -95,21 +95,21 @@ public class MainController implements Initializable {
 		return (Stage) root.getScene().getWindow();
 	}
 
-	void addWebTab(WebWatch webWatch) {
-		WebTab existing = findWebTab(webWatch);
+	void addWebTab(WebPage webPage) {
+		WebTab existing = findWebTab(webPage);
 		if (existing != null) {
 			tabPane.getSelectionModel().select(existing);
 			return;
 		}
 
-		if (webWatch.getFile().isEmpty()) {
-			alert("No <file> found under webWatch.");
+		if (webPage.getFile().isEmpty()) {
+			alert("No <file> found under <webPage>.");
 			return;
 		}
 
-		ChangedHandler reloader = (a, b) -> reloadWebPage(webWatch);
+		ChangedHandler reloader = (a, b) -> reloadWebPage(webPage);
 
-		String nonExisting = webWatch.getFile().stream() //
+		String nonExisting = webPage.getFile().stream() //
 				.map(Paths::get) //
 				.filter(it -> !Files.exists(it)) //
 				.map(it -> it.toString()).collect(Collectors.joining(", "));
@@ -118,14 +118,14 @@ public class MainController implements Initializable {
 			alert(String.format("Non existing file(s) found: %s", nonExisting));
 		}
 
-		List<Watch> watches = webWatch.getFile().stream() //
+		List<Watch> watches = webPage.getFile().stream() //
 				.map(Paths::get) //
 				.filter(Files::exists) //
 				.map(it -> new Watch(it, Processor.NO_PROCESSOR, reloader)) //
 				.collect(Collectors.toList());
 
 		if (!watches.isEmpty()) {
-			WebTab tab = new WebTab(watches.get(0), webWatch);
+			WebTab tab = new WebTab(watches.get(0), webPage);
 			tab.setOnClosed(e -> watches.stream().forEach(it -> it.close()));
 			tabPane.getTabs().add(tab);
 			tabPane.getSelectionModel().select(tab);
@@ -175,8 +175,8 @@ public class MainController implements Initializable {
 		return findTab(FileTab.class).filter(it -> it.file.equals(file)).findFirst().orElse(null);
 	}
 
-	WebTab findWebTab(WebWatch webWatch) {
-		return (WebTab) findTab(WebTab.class).filter(it -> it.webWatch.equals(webWatch)).findFirst().orElse(null);
+	WebTab findWebTab(WebPage webPage) {
+		return (WebTab) findTab(WebTab.class).filter(it -> it.webPage.equals(webPage)).findFirst().orElse(null);
 	}
 
 	public void closeAll() {
@@ -203,8 +203,8 @@ public class MainController implements Initializable {
 		MenuItem open = new MenuItem("Open...");
 		open.setOnAction(e -> onOpen());
 		items.add(open);
-		MenuItem settings = new MenuItem("Add Web Watch...");
-		settings.setOnAction(e -> onAddWebWatch());
+		MenuItem settings = new MenuItem("Add Web Page...");
+		settings.setOnAction(e -> onAddWebPage());
 		items.add(settings);
 
 		items.add(new SeparatorMenuItem());
@@ -219,7 +219,7 @@ public class MainController implements Initializable {
 
 		boolean needsSep = !items.isEmpty();
 		boolean hadWatches = false;
-		for (WebWatch it : Settings.INSTANCE.getWebWatches()) {
+		for (WebPage it : Settings.INSTANCE.getWebPages()) {
 			hadWatches = true;
 			if (needsSep) {
 				items.add(new SeparatorMenuItem());
@@ -245,12 +245,12 @@ public class MainController implements Initializable {
 		items.add(exit);
 	}
 
-	private void onAddWebWatch() {
+	private void onAddWebPage() {
 		try {
-			WebWatch ww = new WebWatch();
-			ww.setUrl("http://localhost:8000/index.html");
-			ww.setFile(Arrays.asList("d:\\data\\myproj\\index.html", "d:\\data\\myproj\\main.css"));
-			Settings.INSTANCE.addWebWatch(ww);
+			WebPage page = new WebPage();
+			page.setUrl("http://localhost:8000/index.html");
+			page.setFile(Arrays.asList("d:\\data\\myproj\\index.html", "d:\\data\\myproj\\main.css"));
+			Settings.INSTANCE.addWebPage(page);
 			buildMenu();
 			Desktop.getDesktop().open(Settings.INSTANCE.getFile().toFile());
 		} catch (Exception e1) {

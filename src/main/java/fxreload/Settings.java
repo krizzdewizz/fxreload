@@ -13,7 +13,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import fxreload.model.FxReload;
-import fxreload.model.WebWatch;
+import fxreload.model.WebPage;
 
 public enum Settings {
 	INSTANCE;
@@ -66,7 +66,7 @@ public enum Settings {
 		needsSave = true;
 	}
 
-	public List<WebWatch> getWebWatches() {
+	public List<WebPage> getWebPages() {
 		return fxReload.getWebPage();
 	}
 
@@ -105,8 +105,8 @@ public enum Settings {
 		}
 	}
 
-	public void addWebWatch(WebWatch webWatch) {
-		getWebWatches().add(webWatch);
+	public void addWebPage(WebPage webPage) {
+		getWebPages().add(webPage);
 		save(getFile());
 	}
 

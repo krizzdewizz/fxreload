@@ -2,12 +2,12 @@ package fxreload.model;
 
 import java.util.List;
 
-public class WebWatch {
+public class WebPage {
 
 	private String url;
 	private List<String> file;
 
-	public WebWatch() {
+	public WebPage() {
 	}
 
 	public String getUrl() {

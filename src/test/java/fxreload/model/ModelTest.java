@@ -13,7 +13,7 @@ public class ModelTest {
 	public void test() throws Exception {
 		FxReload reload = new FxReload();
 		reload.getFile().addAll(Arrays.asList("a", "b"));
-		WebWatch p = new WebWatch();
+		WebPage p = new WebPage();
 		p.setUrl("aaaa");
 		p.setFile(Arrays.asList("a", "b"));
 		reload.getWebPage().add(p);
